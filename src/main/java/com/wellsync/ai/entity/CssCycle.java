@@ -3,7 +3,6 @@ package com.wellsync.ai.entity;
 import com.wellsync.ai.entity.enums.CssCycleStatus;
 import com.wellsync.ai.entity.enums.CssStage;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 

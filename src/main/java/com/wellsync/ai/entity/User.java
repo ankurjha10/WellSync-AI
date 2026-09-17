@@ -7,7 +7,6 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.management.relation.Role;
 import java.time.Instant;
 import java.util.UUID;
 
@@ -37,6 +36,7 @@ public class User {
     private UserRole role;
 
     @NotNull
+    @Builder.Default
     private boolean isActive = true;
 
     @NotNull

@@ -39,8 +39,10 @@ public class SensorConfig {
     @Column(precision = 15, scale = 4)
     private Double maxValue;
 
+    @Builder.Default
     private int samplingIntervalSeconds = 1;
 
+    @Builder.Default
     private boolean isActive = true;
 
     private Instant lastSeenAt;
