@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: WellSync-AI
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/wellsync
+    username: postgres
+    password: Ankur@123
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true

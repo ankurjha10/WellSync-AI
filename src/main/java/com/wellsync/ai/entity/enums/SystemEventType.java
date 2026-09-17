@@ -1,0 +1,12 @@
+package com.wellsync.ai.entity.enums;
+
+public enum SystemEventType {
+    TELEMETRY_STARTED,
+    TELEMETRY_STOPPED,
+    SENSOR_DISCONNECTED,
+    AI_ENGINE_STARTED,
+    CONTROL_COMMAND_SENT,
+    CONTROL_COMMAND_FAILED,
+    EMERGENCY_STOP,
+    SYSTEM_ERROR
+}

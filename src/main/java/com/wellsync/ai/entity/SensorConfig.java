@@ -1,0 +1,51 @@
+package com.wellsync.ai.entity;
+
+import com.wellsync.ai.entity.enums.SensorType;
+import jakarta.persistence.*;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.Instant;
+import java.util.UUID;
+
+@Entity
+@Table(name = "sensor_configs")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class SensorConfig {
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "well_id", nullable = false)
+    private Well well;
+
+    @Column(nullable = false, unique = true)
+    private String sensorCode;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, unique = true)
+    private SensorType sensorType;
+
+    private String unit;
+
+    @Column(precision = 15, scale = 4)
+    private Double minValue;
+
+    @Column(precision = 15, scale = 4)
+    private Double maxValue;
+
+    private int samplingIntervalSeconds = 1;
+
+    private boolean isActive = true;
+
+    private Instant lastSeenAt;
+
+    @CreationTimestamp
+    @Column(nullable = false, updatable = false)
+    private Instant createdAt;
+}
