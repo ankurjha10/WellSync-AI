@@ -36,7 +36,7 @@ public class SteamInjection {
     @Column(precision = 10, scale = 2)
     private Double injectionPressurePsi;
 
-    private int injectionDurationMinutes;
+    private Integer injectionDurationMinutes;
 
     @Column(precision = 5, scale = 2)
     private Double steamQualityPercent;

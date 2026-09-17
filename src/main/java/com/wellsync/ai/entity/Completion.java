@@ -25,6 +25,7 @@ public class Completion {
     @JoinColumn(name = "well_id", nullable = false, unique = true)
     private Well well;
 
+    @Column(length = 50)
     private String completionType;
 
     @Column(precision = 10, scale = 2)

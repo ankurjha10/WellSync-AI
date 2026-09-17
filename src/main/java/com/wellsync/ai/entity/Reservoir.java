@@ -22,9 +22,13 @@ public class Reservoir {
     private UUID id;
 
     @NotBlank
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false, length = 150)
     private String name;
 
+    @Column(length = 150)
+    private String formation;
+
+    @Column(length = 100)
     private String lithology;
 
     @Column(precision = 5, scale = 2)

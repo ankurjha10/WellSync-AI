@@ -21,7 +21,7 @@ public class SrpOperatingConfig {
     private UUID id;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "srp_system_id", nullable = false)
+    @JoinColumn(name = "srp_system_id", nullable = false, unique = true)
     private SrpSystem srpSystem;
 
     @Column(precision = 8, scale = 2)

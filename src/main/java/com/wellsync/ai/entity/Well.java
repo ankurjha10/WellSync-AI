@@ -24,7 +24,7 @@ public class Well {
     private UUID id;
 
     @NotBlank
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, length = 50)
     private String wellCode;
 
     @Column(length = 150)
@@ -37,9 +37,6 @@ public class Well {
     @Column(length = 255)
     private String location;
 
-    @Column(precision = 5, scale = 2)
-    private Double apiGravity;
-
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "reservoir_id", nullable = false)
     private Reservoir reservoir;
@@ -47,6 +44,15 @@ public class Well {
     @Column(nullable = false, length = 30)
     @Enumerated(EnumType.STRING)
     private WellStatus status;
+
+    @OneToOne(mappedBy = "well", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private Completion completion;
+
+    @OneToOne(mappedBy = "well", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private SrpSystem srpSystem;
+
+    @OneToOne(mappedBy = "well", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private WellTarget wellTarget;
 
     @CreationTimestamp
     @Column(nullable = false, updatable = false)

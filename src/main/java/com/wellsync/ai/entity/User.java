@@ -29,9 +29,11 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
 
+    @Column(name = "password_hash")
     private String password;
 
     @NotNull
+    @Column(length = 30, nullable = false)
     @Enumerated(EnumType.STRING)
     private UserRole role;
 

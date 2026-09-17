@@ -9,7 +9,9 @@ import java.time.Instant;
 import java.util.UUID;
 
 @Entity
-@Table(name = "sensor_configs")
+@Table(name = "sensor_configs", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"well_id", "sensor_code"})
+})
 @Getter
 @Setter
 @NoArgsConstructor
@@ -24,13 +26,14 @@ public class SensorConfig {
     @JoinColumn(name = "well_id", nullable = false)
     private Well well;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, length = 100)
     private String sensorCode;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, length = 50)
     private SensorType sensorType;
 
+    @Column(length = 30)
     private String unit;
 
     @Column(precision = 15, scale = 4)

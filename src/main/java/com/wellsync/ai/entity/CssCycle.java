@@ -7,6 +7,7 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -26,13 +27,18 @@ public class CssCycle {
     @JoinColumn(name = "well_id")
     private Well well;
 
+    @Column(nullable = false)
     private int cycleNumber;
 
     @Enumerated(EnumType.STRING)
+    @Column(length = 40)
     private CssStage stage;
 
     @Enumerated(EnumType.STRING)
+    @Column(length = 30)
     private CssCycleStatus status;
+
+    private Integer soakTimeMinutes;
 
     private Instant startTime;
 
@@ -40,6 +46,9 @@ public class CssCycle {
 
     @Column(columnDefinition = "TEXT")
     private String notes;
+
+    @OneToMany(mappedBy = "cssCycle", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<SteamInjection> steamInjections;
 
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
