@@ -6,11 +6,12 @@ import com.wellsync.ai.entity.CssCycle;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
-import org.mapstruct.ReportingPolicy;
 
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(componentModel = "spring")
 public interface CssCycleMapper {
 
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "well", ignore = true)
     @Mapping(target = "steamInjections", ignore = true)
     CssCycle toEntity(CssCycleRequest request);
@@ -18,6 +19,8 @@ public interface CssCycleMapper {
     @Mapping(source = "well.id", target = "wellId")
     CssCycleResponse toResponse(CssCycle entity);
 
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "well", ignore = true)
     @Mapping(target = "steamInjections", ignore = true)
     void updateEntityFromRequest(CssCycleRequest request, @MappingTarget CssCycle entity);

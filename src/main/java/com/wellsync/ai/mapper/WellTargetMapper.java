@@ -6,17 +6,20 @@ import com.wellsync.ai.entity.WellTarget;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
-import org.mapstruct.ReportingPolicy;
 
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(componentModel = "spring")
 public interface WellTargetMapper {
 
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
     @Mapping(target = "well", ignore = true)
     WellTarget toEntity(WellTargetRequest request);
 
     @Mapping(source = "well.id", target = "wellId")
     WellTargetResponse toResponse(WellTarget entity);
 
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
     @Mapping(target = "well", ignore = true)
     void updateEntityFromRequest(WellTargetRequest request, @MappingTarget WellTarget entity);
 }

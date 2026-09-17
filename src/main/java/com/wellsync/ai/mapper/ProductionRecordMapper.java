@@ -5,11 +5,11 @@ import com.wellsync.ai.dto.ProductionRecordResponse;
 import com.wellsync.ai.entity.ProductionRecord;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.ReportingPolicy;
 
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(componentModel = "spring")
 public interface ProductionRecordMapper {
 
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "well", ignore = true)
     ProductionRecord toEntity(ProductionRecordRequest request);
 
