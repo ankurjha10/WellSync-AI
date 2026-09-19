@@ -24,28 +24,28 @@ public class WellTarget {
     @JoinColumn(name = "well_id", nullable = false, unique = true)
     private Well well;
 
-    @Column(precision = 6, scale = 2)
+    @Column(precision = 6)
     private Double minRpm;
 
-    @Column(precision = 6, scale = 2)
+    @Column(precision = 6)
     private Double maxRpm;
 
-    @Column(precision = 6, scale = 2)
+    @Column(precision = 6)
     private Double targetRpm;
 
-    @Column(precision = 8, scale = 2)
+    @Column(precision = 8)
     private Double minTemperatureC;
 
-    @Column(precision = 12, scale = 2)
+    @Column(precision = 12)
     private Double maxViscosityCp;
 
-    @Column(precision = 12, scale = 2)
+    @Column(precision = 12)
     private Double maxRodLoadLbs;
 
-    @Column(precision = 10, scale = 2)
+    @Column(precision = 10)
     private Double targetOilRateBopd;
 
-    @Column(precision = 12, scale = 2)
+    @Column(precision = 12)
     private Double maxEnergyKwh;
 
     @UpdateTimestamp

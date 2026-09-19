@@ -35,22 +35,22 @@ public class SrpSystem {
     @Column(length = 100)
     private String rodType;
 
-    @Column(precision = 10, scale = 2)
+    @Column(precision = 10)
     private Double rodStringLength;
 
-    @Column(precision = 10, scale = 2)
+    @Column(precision = 10)
     private Double pumpDepth;
 
-    @Column(precision = 6, scale = 2)
+    @Column(precision = 6)
     private Double minRpm;
 
-    @Column(precision = 6, scale = 2)
+    @Column(precision = 6)
     private Double maxRpm;
 
-    @Column(precision = 8, scale = 2)
+    @Column(precision = 8)
     private Double maxStrokeLength;
 
-    @Column(precision = 12, scale = 2)
+    @Column(precision = 12)
     private Double maxRodLoad;
 
     @Column(length = 30)

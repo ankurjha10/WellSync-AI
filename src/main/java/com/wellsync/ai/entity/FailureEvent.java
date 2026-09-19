@@ -44,7 +44,7 @@ public class FailureEvent {
     @Column(columnDefinition = "TEXT")
     private String rootCause;
 
-    @Column(precision = 5, scale = 2)
+    @Column(precision = 5)
     private Double relatedRiskScore;
 
     @CreationTimestamp

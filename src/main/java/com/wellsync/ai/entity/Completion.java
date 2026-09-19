@@ -28,19 +28,19 @@ public class Completion {
     @Column(length = 50)
     private String completionType;
 
-    @Column(precision = 10, scale = 2)
+    @Column(precision = 10)
     private Double tubingDepth;
 
-    @Column(precision = 10, scale = 2)
+    @Column(precision = 10)
     private Double casingDepth;
 
-    @Column(precision = 10, scale = 2)
+    @Column(precision = 10)
     private Double perforationTop;
 
-    @Column(precision = 10, scale = 2)
+    @Column(precision = 10)
     private Double perforationBottom;
 
-    @Column(precision = 10, scale = 2)
+    @Column(precision = 10)
     private Double pumpSettingDepth;
 
     @CreationTimestamp

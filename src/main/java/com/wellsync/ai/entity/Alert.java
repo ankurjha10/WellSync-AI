@@ -40,7 +40,7 @@ public class Alert {
     @Column(columnDefinition = "TEXT")
     private String message;
 
-    @Column(precision = 5, scale = 2)
+    @Column(precision = 5)
     private Double riskScore;
 
     @Builder.Default

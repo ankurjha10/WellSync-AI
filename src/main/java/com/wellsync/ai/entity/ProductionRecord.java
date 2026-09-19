@@ -26,24 +26,24 @@ public class ProductionRecord {
     @Column(nullable = false)
     private Instant recordedAt;
 
-    @Column(precision = 10, scale = 2)
+    @Column(precision = 10)
     private Double oilRateBopd;
 
-    @Column(precision = 10, scale = 2)
+    @Column(precision = 10)
     private Double waterRateBwpd;
 
-    @Column(precision = 10, scale = 2)
+    @Column(precision = 10)
     private Double gasRateMscfd;
 
-    @Column(precision = 5, scale = 2)
+    @Column(precision = 5)
     private Double waterCutPercent;
 
-    @Column(precision = 10, scale = 4)
+    @Column(precision = 10)
     private Double steamOilRatio;
 
-    @Column(precision = 12, scale = 2)
+    @Column(precision = 12)
     private Double energyConsumptionKwh;
 
-    @Column(precision = 5, scale = 2)
+    @Column(precision = 5)
     private Double pumpEfficiencyPercent;
 }

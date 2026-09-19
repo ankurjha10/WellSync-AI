@@ -35,10 +35,10 @@ public class ControlCommand {
     @Column(length = 50)
     private CommandType commandType;
 
-    @Column(precision = 12, scale = 4)
+    @Column(precision = 12)
     private Double previousValue;
 
-    @Column(precision = 12, scale = 4)
+    @Column(precision = 12)
     private Double requestedValue;
 
     @Column(length = 30)

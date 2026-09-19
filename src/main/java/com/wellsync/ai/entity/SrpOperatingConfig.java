@@ -24,22 +24,22 @@ public class SrpOperatingConfig {
     @JoinColumn(name = "srp_system_id", nullable = false, unique = true)
     private SrpSystem srpSystem;
 
-    @Column(precision = 8, scale = 2)
+    @Column(precision = 8)
     private Double strokeLength;
 
-    @Column(precision = 6, scale = 2)
+    @Column(precision = 6)
     private Double spm;
 
-    @Column(precision = 6, scale = 2)
+    @Column(precision = 6)
     private Double pumpRpm;
 
-    @Column(precision = 8, scale = 2)
+    @Column(precision = 8)
     private Double vfdFrequency;
 
-    @Column(precision = 6, scale = 2)
+    @Column(precision = 6)
     private Double targetRpm;
 
-    @Column(precision = 5, scale = 2)
+    @Column(precision = 5)
     private Double pumpEfficiencyPercent;
 
     @UpdateTimestamp

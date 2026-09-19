@@ -36,10 +36,10 @@ public class SensorConfig {
     @Column(length = 30)
     private String unit;
 
-    @Column(precision = 15, scale = 4)
+    @Column(precision = 15)
     private Double minValue;
 
-    @Column(precision = 15, scale = 4)
+    @Column(precision = 15)
     private Double maxValue;
 
     @Builder.Default

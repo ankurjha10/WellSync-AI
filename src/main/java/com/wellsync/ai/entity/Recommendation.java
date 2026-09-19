@@ -32,16 +32,16 @@ public class Recommendation {
     @Column(length = 50)
     private RecommendationType recommendationType;
 
-    @Column(precision = 12, scale = 4)
+    @Column(precision = 12)
     private Double currentValue;
 
-    @Column(precision = 12, scale = 4)
+    @Column(precision = 12)
     private Double recommendedValue;
 
     @Column(length = 30)
     private String unit;
 
-    @Column(precision = 5, scale = 2)
+    @Column(precision = 5)
     private Double riskScore;
 
     @Column(columnDefinition = "TEXT")

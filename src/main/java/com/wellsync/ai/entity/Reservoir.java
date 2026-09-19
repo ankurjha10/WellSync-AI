@@ -31,25 +31,25 @@ public class Reservoir {
     @Column(length = 100)
     private String lithology;
 
-    @Column(precision = 5, scale = 2)
+    @Column(precision = 5)
     private Double apiGravity;
 
-    @Column(precision = 8, scale = 2)
+    @Column(precision = 8)
     private Double initialTemperatureC;
 
-    @Column(precision = 10, scale = 2)
+    @Column(precision = 10)
     private Double initialPressurePsi;
 
-    @Column(precision = 12, scale = 2)
+    @Column(precision = 12)
     private Double oilViscosityCp;
 
-    @Column(precision = 5, scale = 2)
+    @Column(precision = 5)
     private Double porosityPercent;
 
-    @Column(precision = 12, scale = 4)
+    @Column(precision = 12)
     private Double permeabilityMd;
 
-    @Column(precision = 10, scale = 2)
+    @Column(precision = 10)
     private Double depthM;
 
     @CreationTimestamp
