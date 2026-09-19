@@ -52,7 +52,14 @@ public class RecommendationEngine {
         req.setUnit(unit);
         req.setRiskScore((double) state.getCurrentRiskScore());
         req.setReason(reason);
-        req.setFactors(String.join("; ", factors));
+        
+        try {
+            com.fasterxml.jackson.databind.ObjectMapper objectMapper = new com.fasterxml.jackson.databind.ObjectMapper();
+            req.setFactors(objectMapper.writeValueAsString(factors));
+        } catch (Exception e) {
+            req.setFactors("[]");
+        }
+        
         req.setStatus(RecommendationStatus.PENDING);
 
         recommendationService.create(req);
