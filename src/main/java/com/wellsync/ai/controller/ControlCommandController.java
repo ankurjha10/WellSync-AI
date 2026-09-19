@@ -23,6 +23,7 @@ import java.util.UUID;
 public class ControlCommandController {
 
     private final ControlCommandService controlCommandService;
+    private final com.wellsync.ai.control.ControlSafetyEngine controlSafetyEngine;
 
     @GetMapping
     @Operation(summary = "Get control commands by well", description = "Retrieves all control commands for a given well.")
@@ -58,6 +59,16 @@ public class ControlCommandController {
     public ResponseEntity<ControlCommandResponse> markExecuted(
             @Parameter(description = "Control Command UUID") @PathVariable UUID id) {
         return ResponseEntity.ok(controlCommandService.markExecuted(id));
+    }
+
+    @PostMapping("/execute-recommendation")
+    @Operation(summary = "Execute a safety-validated control command from the frontend")
+    public ResponseEntity<?> executeValidatedCommand(@Valid @RequestBody ControlCommandRequest request) {
+        try {
+            return ResponseEntity.ok(controlSafetyEngine.requestCommandExecution(request));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @PutMapping("/{id}")
