@@ -3,6 +3,8 @@ package com.wellsync.ai.controller;
 import com.wellsync.ai.dto.ControlCommandRequest;
 import com.wellsync.ai.dto.ControlCommandResponse;
 import com.wellsync.ai.service.ControlCommandService;
+import com.wellsync.ai.control.ControlSafetyEngine;
+import com.wellsync.ai.kafka.CommandProducer;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -23,7 +25,8 @@ import java.util.UUID;
 public class ControlCommandController {
 
     private final ControlCommandService controlCommandService;
-    private final com.wellsync.ai.control.ControlSafetyEngine controlSafetyEngine;
+    private final ControlSafetyEngine controlSafetyEngine;
+    private final CommandProducer commandProducer;
 
     @GetMapping
     @Operation(summary = "Get control commands by well", description = "Retrieves all control commands for a given well.")
@@ -65,7 +68,9 @@ public class ControlCommandController {
     @Operation(summary = "Execute a safety-validated control command from the frontend")
     public ResponseEntity<?> executeValidatedCommand(@Valid @RequestBody ControlCommandRequest request) {
         try {
-            return ResponseEntity.ok(controlSafetyEngine.requestCommandExecution(request));
+            com.wellsync.ai.entity.ControlCommand command = controlSafetyEngine.requestCommandExecution(request);
+            commandProducer.sendCommand(request); // Push to Kafka Edge Node
+            return ResponseEntity.ok(command);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

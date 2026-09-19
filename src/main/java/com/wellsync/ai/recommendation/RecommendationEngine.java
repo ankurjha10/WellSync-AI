@@ -4,7 +4,10 @@ import com.wellsync.ai.digitaltwin.WellDigitalTwinState;
 import com.wellsync.ai.dto.RecommendationRequest;
 import com.wellsync.ai.entity.enums.RecommendationStatus;
 import com.wellsync.ai.entity.enums.RecommendationType;
+import com.wellsync.ai.dto.RecommendationResponse;
 import com.wellsync.ai.service.RecommendationService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -17,6 +20,7 @@ import java.util.List;
 public class RecommendationEngine {
 
     private final RecommendationService recommendationService;
+    private final SimpMessagingTemplate messagingTemplate;
 
     public void evaluateRecommendations(WellDigitalTwinState state, List<String> riskFactors) {
         if (state.getCurrentRiskScore() < 60) {
@@ -54,7 +58,7 @@ public class RecommendationEngine {
         req.setReason(reason);
         
         try {
-            com.fasterxml.jackson.databind.ObjectMapper objectMapper = new com.fasterxml.jackson.databind.ObjectMapper();
+            ObjectMapper objectMapper = new ObjectMapper();
             req.setFactors(objectMapper.writeValueAsString(factors));
         } catch (Exception e) {
             req.setFactors("[]");
@@ -62,7 +66,15 @@ public class RecommendationEngine {
         
         req.setStatus(RecommendationStatus.PENDING);
 
-        recommendationService.create(req);
+        RecommendationResponse created = recommendationService.create(req);
+        
+        // Push recommendation to WebSocket
+        try {
+            messagingTemplate.convertAndSend("/topic/recommendations/" + state.getWellId(), created);
+        } catch (Exception e) {
+            log.error("Failed to push recommendation to WebSocket", e);
+        }
+
         log.info("Generated Recommendation {} for Well {}", type, state.getWellId());
     }
 }

@@ -6,7 +6,9 @@ import com.wellsync.ai.entity.enums.AlertSeverity;
 import com.wellsync.ai.entity.enums.AlertType;
 import com.wellsync.ai.entity.enums.RiskLevel;
 import com.wellsync.ai.entity.enums.SystemStatus;
+import com.wellsync.ai.dto.AlertResponse;
 import com.wellsync.ai.service.AlertService;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,7 @@ import java.util.List;
 public class RiskEngine {
 
     private final AlertService alertService;
+    private final SimpMessagingTemplate messagingTemplate;
 
     public List<String> evaluateRisk(WellDigitalTwinState state) {
         int riskScore = 0;
@@ -99,7 +102,14 @@ public class RiskEngine {
             alert.setMessage("Risk score reached " + state.getCurrentRiskScore() + ". Factors: " + String.join(", ", factors));
             alert.setRiskScore((double) state.getCurrentRiskScore());
             
-            alertService.create(alert);
+            AlertResponse created = alertService.create(alert);
+            
+            try {
+                messagingTemplate.convertAndSend("/topic/alerts/" + state.getWellId(), created);
+            } catch (Exception e) {
+                log.error("Failed to push alert to WebSocket", e);
+            }
+            
             log.info("Generated Alert for Well {}", state.getWellId());
         } catch (Exception e) {
             log.error("Failed to generate alert for well {}: {}", state.getWellId(), e.getMessage());
