@@ -35,7 +35,7 @@ public class WellTargetService {
 
         WellTarget target = wellTargetMapper.toEntity(request);
         target.setWell(well);
-        WellTarget saved = wellTargetRepository.save(target);
+        WellTarget saved = wellTargetRepository.saveAndFlush(target);
         return wellTargetMapper.toResponse(saved);
     }
 
@@ -69,7 +69,7 @@ public class WellTargetService {
 
         wellTargetMapper.updateEntityFromRequest(request, target);
         target.setWell(well);
-        WellTarget updated = wellTargetRepository.save(target);
+        WellTarget updated = wellTargetRepository.saveAndFlush(target);
         return wellTargetMapper.toResponse(updated);
     }
 

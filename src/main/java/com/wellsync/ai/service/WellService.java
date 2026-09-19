@@ -35,7 +35,7 @@ public class WellService {
 
         Well well = wellMapper.toEntity(request);
         well.setReservoir(reservoir);
-        Well saved = wellRepository.save(well);
+        Well saved = wellRepository.saveAndFlush(well);
         return wellMapper.toResponse(saved);
     }
 
@@ -68,7 +68,7 @@ public class WellService {
 
         wellMapper.updateEntityFromRequest(request, well);
         well.setReservoir(reservoir);
-        Well updated = wellRepository.save(well);
+        Well updated = wellRepository.saveAndFlush(well);
         return wellMapper.toResponse(updated);
     }
 

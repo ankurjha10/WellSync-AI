@@ -31,7 +31,7 @@ public class CssCycleService {
 
         CssCycle cycle = cssCycleMapper.toEntity(request);
         cycle.setWell(well);
-        CssCycle saved = cssCycleRepository.save(cycle);
+        CssCycle saved = cssCycleRepository.saveAndFlush(cycle);
         return cssCycleMapper.toResponse(saved);
     }
 
@@ -59,7 +59,7 @@ public class CssCycleService {
 
         cssCycleMapper.updateEntityFromRequest(request, cycle);
         cycle.setWell(well);
-        CssCycle updated = cssCycleRepository.save(cycle);
+        CssCycle updated = cssCycleRepository.saveAndFlush(cycle);
         return cssCycleMapper.toResponse(updated);
     }
 

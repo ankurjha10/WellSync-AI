@@ -35,7 +35,7 @@ public class SrpOperatingConfigService {
 
         SrpOperatingConfig config = srpOperatingConfigMapper.toEntity(request);
         config.setSrpSystem(srpSystem);
-        SrpOperatingConfig saved = srpOperatingConfigRepository.save(config);
+        SrpOperatingConfig saved = srpOperatingConfigRepository.saveAndFlush(config);
         return srpOperatingConfigMapper.toResponse(saved);
     }
 
@@ -69,7 +69,7 @@ public class SrpOperatingConfigService {
 
         srpOperatingConfigMapper.updateEntityFromRequest(request, config);
         config.setSrpSystem(srpSystem);
-        SrpOperatingConfig updated = srpOperatingConfigRepository.save(config);
+        SrpOperatingConfig updated = srpOperatingConfigRepository.saveAndFlush(config);
         return srpOperatingConfigMapper.toResponse(updated);
     }
 

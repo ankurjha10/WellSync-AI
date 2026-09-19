@@ -31,7 +31,7 @@ public class ProductionRecordService {
 
         ProductionRecord record = productionRecordMapper.toEntity(request);
         record.setWell(well);
-        ProductionRecord saved = productionRecordRepository.save(record);
+        ProductionRecord saved = productionRecordRepository.saveAndFlush(record);
         return productionRecordMapper.toResponse(saved);
     }
 

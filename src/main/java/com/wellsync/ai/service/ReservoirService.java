@@ -24,7 +24,7 @@ public class ReservoirService {
     @Transactional
     public ReservoirResponse create(ReservoirRequest request) {
         Reservoir reservoir = reservoirMapper.toEntity(request);
-        Reservoir saved = reservoirRepository.save(reservoir);
+        Reservoir saved = reservoirRepository.saveAndFlush(reservoir);
         return reservoirMapper.toResponse(saved);
     }
 
@@ -47,7 +47,7 @@ public class ReservoirService {
         Reservoir reservoir = reservoirRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Reservoir not found with id: " + id));
         reservoirMapper.updateEntityFromRequest(request, reservoir);
-        Reservoir updated = reservoirRepository.save(reservoir);
+        Reservoir updated = reservoirRepository.saveAndFlush(reservoir);
         return reservoirMapper.toResponse(updated);
     }
 

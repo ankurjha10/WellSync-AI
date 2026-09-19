@@ -35,7 +35,7 @@ public class SrpSystemService {
 
         SrpSystem srpSystem = srpSystemMapper.toEntity(request);
         srpSystem.setWell(well);
-        SrpSystem saved = srpSystemRepository.save(srpSystem);
+        SrpSystem saved = srpSystemRepository.saveAndFlush(srpSystem);
         return srpSystemMapper.toResponse(saved);
     }
 
@@ -69,7 +69,7 @@ public class SrpSystemService {
 
         srpSystemMapper.updateEntityFromRequest(request, srpSystem);
         srpSystem.setWell(well);
-        SrpSystem updated = srpSystemRepository.save(srpSystem);
+        SrpSystem updated = srpSystemRepository.saveAndFlush(srpSystem);
         return srpSystemMapper.toResponse(updated);
     }
 

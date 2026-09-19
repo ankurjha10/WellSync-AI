@@ -35,7 +35,7 @@ public class CompletionService {
 
         Completion completion = completionMapper.toEntity(request);
         completion.setWell(well);
-        Completion saved = completionRepository.save(completion);
+        Completion saved = completionRepository.saveAndFlush(completion);
         return completionMapper.toResponse(saved);
     }
 
@@ -69,7 +69,7 @@ public class CompletionService {
 
         completionMapper.updateEntityFromRequest(request, completion);
         completion.setWell(well);
-        Completion updated = completionRepository.save(completion);
+        Completion updated = completionRepository.saveAndFlush(completion);
         return completionMapper.toResponse(updated);
     }
 

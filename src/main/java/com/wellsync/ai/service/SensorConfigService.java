@@ -38,7 +38,7 @@ public class SensorConfigService {
             config.setSamplingIntervalSeconds(request.getSamplingIntervalSeconds());
         }
         
-        SensorConfig saved = sensorConfigRepository.save(config);
+        SensorConfig saved = sensorConfigRepository.saveAndFlush(config);
         return sensorConfigMapper.toResponse(saved);
     }
 
@@ -73,7 +73,7 @@ public class SensorConfigService {
             config.setSamplingIntervalSeconds(request.getSamplingIntervalSeconds());
         }
         
-        SensorConfig updated = sensorConfigRepository.save(config);
+        SensorConfig updated = sensorConfigRepository.saveAndFlush(config);
         return sensorConfigMapper.toResponse(updated);
     }
 

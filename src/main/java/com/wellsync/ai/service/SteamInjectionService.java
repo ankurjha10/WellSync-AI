@@ -31,7 +31,7 @@ public class SteamInjectionService {
 
         SteamInjection injection = steamInjectionMapper.toEntity(request);
         injection.setCssCycle(cycle);
-        SteamInjection saved = steamInjectionRepository.save(injection);
+        SteamInjection saved = steamInjectionRepository.saveAndFlush(injection);
         return steamInjectionMapper.toResponse(saved);
     }
 
@@ -59,7 +59,7 @@ public class SteamInjectionService {
 
         steamInjectionMapper.updateEntityFromRequest(request, injection);
         injection.setCssCycle(cycle);
-        SteamInjection updated = steamInjectionRepository.save(injection);
+        SteamInjection updated = steamInjectionRepository.saveAndFlush(injection);
         return steamInjectionMapper.toResponse(updated);
     }
 
