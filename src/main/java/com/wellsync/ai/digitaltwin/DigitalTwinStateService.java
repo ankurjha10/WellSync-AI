@@ -19,7 +19,14 @@ public class DigitalTwinStateService {
     private final ConcurrentHashMap<UUID, WellDigitalTwinState> wellStates = new ConcurrentHashMap<>();
 
     public WellDigitalTwinState getState(UUID wellId) {
-        return wellStates.get(wellId);
+        return wellStates.computeIfAbsent(wellId, id -> 
+                WellDigitalTwinState.builder()
+                        .wellId(id)
+                        .systemStatus(SystemStatus.NORMAL)
+                        .riskLevel(RiskLevel.HEALTHY)
+                        .currentRiskScore(0)
+                        .build()
+        );
     }
 
     public Collection<WellDigitalTwinState> getAllStates() {
