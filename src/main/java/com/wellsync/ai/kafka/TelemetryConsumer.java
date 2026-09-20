@@ -27,8 +27,10 @@ public class TelemetryConsumer {
 
     @KafkaListener(topics = "telemetry.raw", groupId = "wellsync-group")
     public void consumeTelemetry(String message) {
+        log.info("Received raw telemetry from Kafka: {}", message);
         try {
             TelemetryData data = objectMapper.readValue(message, TelemetryData.class);
+            log.info("Parsed telemetry successfully for well: {}", data.getWellId());
             
             // 1. Process telemetry and update digital twin state
             WellDigitalTwinState updatedState = digitalTwinStateService.updateState(data);
