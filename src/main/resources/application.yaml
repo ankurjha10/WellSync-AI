@@ -3,7 +3,7 @@ spring:
     name: WellSync-AI
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/wellsync
+    url: jdbc:postgresql://localhost:5433/wellsync
     username: postgres
     password: Ankur@123
 
