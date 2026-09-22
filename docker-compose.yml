@@ -67,6 +67,9 @@ services:
       - INFLUX_TOKEN=${INFLUXDB_TOKEN}
       - INFLUX_ORG=${INFLUXDB_ORG}
       - INFLUX_BUCKET=${INFLUXDB_BUCKET}
+      - GROQ_API_KEY=${GROQ_API_KEY}
+      - GROQ_BASE_URL=${GROQ_BASE_URL}
+      - GROQ_MODEL=${GROQ_MODEL}
     depends_on:
       - postgres
       - kafka
