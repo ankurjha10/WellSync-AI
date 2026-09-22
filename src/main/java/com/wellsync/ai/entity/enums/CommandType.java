@@ -7,5 +7,6 @@ public enum CommandType {
     SET_VFD,
     START_PUMP,
     STOP_PUMP,
-    EMERGENCY_STOP
+    EMERGENCY_STOP,
+    SET_STEAM_RATE
 }

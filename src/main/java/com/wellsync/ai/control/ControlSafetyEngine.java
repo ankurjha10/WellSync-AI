@@ -37,6 +37,8 @@ public class ControlSafetyEngine {
         // Safety rules based on command type
         if (request.getCommandType() == CommandType.SET_RPM) {
             validateRpmSafety(request.getRequestedValue());
+        } else if (request.getCommandType() == CommandType.SET_STEAM_RATE) {
+            validateSteamInjection(request.getRequestedValue());
         } else {
             // Other commands pass through for now
         }
