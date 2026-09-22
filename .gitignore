@@ -36,3 +36,4 @@ docs/project-context.md
 .env
 .influx-data/
 .influx-data/influxd.bolt
+.env

@@ -23,6 +23,14 @@ spring:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
 
+  ai:
+    openai:
+      api-key: ${GROQ_API_KEY}
+      base-url: ${GROQ_BASE_URL}
+      chat:
+        options:
+          model: ${GROQ_MODEL}
+
 influx:
   url: ${INFLUX_URL:http://localhost:8086}
   token: ${INFLUX_TOKEN:my-super-secret-auth-token-wellsync-ai-2026}
