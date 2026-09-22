@@ -6,6 +6,7 @@ import com.wellsync.ai.digitaltwin.WellDigitalTwinState;
 import com.wellsync.ai.dto.TelemetryData;
 import com.wellsync.ai.recommendation.RecommendationEngine;
 import com.wellsync.ai.risk.RiskEngine;
+import com.wellsync.ai.repository.TelemetryRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -24,6 +25,7 @@ public class TelemetryConsumer {
     private final RiskEngine riskEngine;
     private final RecommendationEngine recommendationEngine;
     private final SimpMessagingTemplate messagingTemplate;
+    private final TelemetryRepository telemetryRepository;
 
     @KafkaListener(topics = "telemetry.raw", groupId = "wellsync-group")
     public void consumeTelemetry(String message) {
@@ -32,7 +34,10 @@ public class TelemetryConsumer {
             TelemetryData data = objectMapper.readValue(message, TelemetryData.class);
             log.info("Parsed telemetry successfully for well: {}", data.getWellId());
             
-            // 1. Process telemetry and update digital twin state
+            // 1. Save historical data to InfluxDB
+            telemetryRepository.save(data);
+
+            // 2. Process telemetry and update digital twin state
             WellDigitalTwinState updatedState = digitalTwinStateService.updateState(data);
             List<String> riskFactors = riskEngine.evaluateRisk(updatedState);
             recommendationEngine.evaluateRecommendations(updatedState, riskFactors);

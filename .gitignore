@@ -33,3 +33,5 @@ build/
 .vscode/
 src/main/java/com/wellsync/ai/config/DatabaseSeeder.java
 docs/project-context.md
+.env
+.env
