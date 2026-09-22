@@ -6,6 +6,8 @@ import com.wellsync.ai.dto.CopilotResponse;
 import com.wellsync.ai.entity.Alert;
 import com.wellsync.ai.exception.ResourceNotFoundException;
 import com.wellsync.ai.repository.AlertRepository;
+import com.wellsync.ai.entity.Recommendation;
+import com.wellsync.ai.repository.RecommendationRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.stereotype.Service;
@@ -39,15 +41,18 @@ public class CopilotService {
 
     private final ChatClient chatClient;
     private final AlertRepository alertRepository;
+    private final RecommendationRepository recommendationRepository;
     private final DigitalTwinStateService digitalTwinStateService;
 
     public CopilotService(ChatClient.Builder chatClientBuilder,
                           AlertRepository alertRepository,
+                          RecommendationRepository recommendationRepository,
                           DigitalTwinStateService digitalTwinStateService) {
         this.chatClient = chatClientBuilder
                 .defaultSystem(SYSTEM_PROMPT)
                 .build();
         this.alertRepository = alertRepository;
+        this.recommendationRepository = recommendationRepository;
         this.digitalTwinStateService = digitalTwinStateService;
     }
 
@@ -76,6 +81,26 @@ public class CopilotService {
     /**
      * Handles a free-form chat message from the operator, with live Digital Twin context.
      */
+
+    public CopilotResponse explainRecommendation(UUID recommendationId) {
+        Recommendation rec = recommendationRepository.findById(recommendationId)
+                .orElseThrow(() -> new ResourceNotFoundException("Recommendation not found with id: " + recommendationId));
+
+        UUID wellId = rec.getWell().getId();
+        WellDigitalTwinState state = digitalTwinStateService.getState(wellId);
+
+        String userPrompt = buildRecommendationExplanationPrompt(rec, state);
+
+        log.info("Requesting AI explanation for recommendation {} on well {}", recommendationId, wellId);
+
+        String aiResponse = chatClient.prompt()
+                .user(userPrompt)
+                .call()
+                .content();
+
+        return new CopilotResponse(aiResponse);
+    }
+
     public CopilotResponse chat(UUID wellId, String userMessage) {
         WellDigitalTwinState state = digitalTwinStateService.getState(wellId);
 
@@ -118,6 +143,37 @@ public class CopilotService {
                 alert.getMessage(),
                 alert.getRiskScore(),
                 alert.getCreatedAt(),
+                formatState(state)
+        );
+    }
+
+
+    private String buildRecommendationExplanationPrompt(Recommendation rec, WellDigitalTwinState state) {
+        return String.format("""
+                A system recommendation has been generated for the well. Analyze the recommendation and the current \
+                Digital Twin telemetry data below, then provide a clear, concise justification for the operator.
+
+                --- RECOMMENDATION DETAILS ---
+                Type: %s
+                Title: %s
+                Message: %s
+                Command Type: %s
+                Target Value: %s %s
+
+                --- CURRENT DIGITAL TWIN STATE ---
+                %s
+
+                Provide:
+                1. A plain-language explanation of why this action is recommended.
+                2. What physical impact this action will have on the well.
+                3. The potential risks if this recommendation is ignored.
+                """,
+                rec.getRecommendationType(),
+                rec.getRecommendationType(),
+                rec.getReason(),
+                rec.getRecommendationType(),
+                rec.getRecommendedValue(),
+                rec.getUnit(),
                 formatState(state)
         );
     }

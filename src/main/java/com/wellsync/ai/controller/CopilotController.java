@@ -35,6 +35,13 @@ public class CopilotController {
         return ResponseEntity.ok(copilotService.explainAlert(alertId));
     }
 
+
+    @GetMapping("/explain-recommendation/{recommendationId}")
+    @Operation(summary = "Explain a recommendation", description = "Uses AI to generate a justification for a given recommendation.")
+    public ResponseEntity<CopilotResponse> explainRecommendation(@PathVariable UUID recommendationId) {
+        return ResponseEntity.ok(copilotService.explainRecommendation(recommendationId));
+    }
+
     @PostMapping("/chat")
     @Operation(
             summary = "Chat with the Copilot",
