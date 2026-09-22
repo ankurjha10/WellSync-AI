@@ -35,5 +35,3 @@ src/main/java/com/wellsync/ai/config/DatabaseSeeder.java
 docs/project-context.md
 .env
 .influx-data/
-.influx-data/influxd.bolt
-.env
