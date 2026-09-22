@@ -12,7 +12,6 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/v1/telemetry")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*") // Allows Next.js frontend to call this API during local dev
 public class TelemetryController {
 
     private final TelemetryRepository telemetryRepository;
