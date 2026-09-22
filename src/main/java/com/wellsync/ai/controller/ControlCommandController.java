@@ -70,6 +70,11 @@ public class ControlCommandController {
         try {
             com.wellsync.ai.entity.ControlCommand command = controlSafetyEngine.requestCommandExecution(request);
             commandProducer.sendCommand(request); // Push to Kafka Edge Node
+            
+            // Auto-ACK for demo purposes so Audit Log reflects execution
+            controlCommandService.markExecuted(command.getId());
+            command.setStatus(com.wellsync.ai.entity.enums.CommandStatus.EXECUTED);
+
             return ResponseEntity.ok(command);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
